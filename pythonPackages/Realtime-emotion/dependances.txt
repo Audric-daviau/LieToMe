@@ -1,0 +1,1 @@
+pip install opencv-python && pip install tensorflow && pip install numpy && pip install pandas && pip install keras && pip install adam && pip install kwargs && pip install cinit 
