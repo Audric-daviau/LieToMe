@@ -9,16 +9,14 @@ from keras.losses import categorical_crossentropy
 from keras.optimizers import Adam
 from keras.regularizers import l2
 from keras.utils import np_utils
-# pd.set_option('display.max_rows', 500)
-# pd.set_option('display.max_columns', 500)
-# pd.set_option('display.width', 1000)
 
 df=pd.read_csv('fer2013.csv')
 
-# print(df.info())
-# print(df["Usage"].value_counts())
+print(df.info())
+print(df["Usage"].value_counts())
 
-# print(df.head())
+print(df.head())
+
 X_train,train_y,X_test,test_y=[],[],[],[]
 
 for index, row in df.iterrows():

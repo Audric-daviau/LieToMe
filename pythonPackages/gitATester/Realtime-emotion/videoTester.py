@@ -4,8 +4,6 @@ import numpy as np
 from keras.models import model_from_json
 
 from keras.preprocessing import image
-
-from PIL import Image
 import tensorflow as tf
 
 #load model
