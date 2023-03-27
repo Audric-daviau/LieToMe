@@ -1,0 +1,2 @@
+# lancer notre image dockerdocker 
+docker run --gpus all --cpus=4 -it -p 8888:8888 --mount type=bind, source=/home/audric/audric/ESIEE-S4/S4/LieToMe/LieToMe/pythonPackages/src/,target=/src,readonly=false LieToMieIa
