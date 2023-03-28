@@ -1,24 +1,31 @@
-# Utilisation du Dockerfile LieToMeIa
+# Utilisation du Dockerfile pythonia
 
 ## Prérequis
 
 - Docker doit être installé sur votre machine
-- Le Dockerfile LieToMeIa doit être présent sur votre ordinateur
+- Le Dockerfile pythonia doit être présent sur votre ordinateur
 
 ## Instructions
 
-1. Placez-vous dans le dossier contenant le Dockerfile LieToMeIa
+1. Placez-vous dans le dossier contenant le Dockerfile pythonia
 2. Ouvrez un terminal dans ce dossier
 3. Construisez l'image Docker en utilisant la commande suivante :
 
 ```bash
-docker build -t LieToMeIa .
+docker build . -t pythonia
 ```
 
 4. Une fois l'image construite, vous pouvez la lancer en utilisant la commande suivante :
 
 ```bash
-docker run -it --gpus all --mount type=bind,source=/path/to/your/folder,target=/src LieToMeIa
+docker run -it --gpus all --cpus=4 -it -p 8888:8888 pythonia
+                                         #machine,docker
+```
+
+5. Pour monter un volume 
+
+```bash
+docker run --gpus all --cpus=4 -it -p 8888:8888 --mount type=bind, source=pythonPackages/src/,target=/src,readonly=false pythonia
 ```
 
 Assurez-vous de remplacer "/path/to/your/folder" par le chemin absolu du dossier que vous souhaitez monter dans le conteneur. Cette commande lancera le conteneur et vous donnera un accès interactif au shell.
@@ -29,13 +36,13 @@ Si vous souhaitez personnaliser la configuration de votre conteneur, vous pouvez
 
 
 ```bash
-docker run -it --cpus=4 --mount type=bind,source=/path/to/your/folder,target=/src LieToMeIa
+docker run -it --cpus=4 --mount type=bind,source=/path/to/your/folder,target=/src pythonia
 ```
 
 Pour utiliser le GPU de votre ordinateur utiliser l'opion "--gpus all":
 
 ```bash
-docker run -it --gpus all --mount type=bind,source=/path/to/your/folder,target=/src LieToMeIa
+docker run -it --gpus all --mount type=bind,source=/path/to/your/folder,target=/src pythonia
 ```
 
 

@@ -1,6 +1,6 @@
 # Comment installer Docker sous Windows
 
-## Introductio
+## Introduction
 
 Docker est un outil très populaire pour créer et exécuter des applications dans des conteneurs. Dans ce guide, nous allons vous montrer comment installer Docker sous Windows. Il existe plusieurs façons d'installer Docker sous Windows, mais nous allons nous concentrer sur la méthode recommandée par Docker.
 
