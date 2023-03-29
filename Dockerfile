@@ -12,27 +12,31 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsm6 \
     libxext6 \
     libxrender-dev \
+    sudo \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Create new user to run as non-root user
+# RUN useradd -d /home/userlambda -m -s /bin/bash userlambda 
 RUN useradd -d /home/userlambda -m -s /bin/bash userlambda --uid 11324
+
 USER userlambda
 
+# Définition du répertoire de travail
 WORKDIR /app
 
 # Copie du requirements.txt dans l'image
 COPY --chown=userlambda:userlambda requirements.txt .
-
 # Installation des packages Python requis
 RUN pip install --no-cache-dir -r requirements.txt
 
+# COPY --chown=userlambda:userlambda pythonPackages/src/OpenFace/install.sh install.sh
+# RUN pythonPackages/src/OpenFace/install.sh 
 
-# Définition du répertoire de travail, copy le dossier pythonPackages/src/ dans le containeur au chemin app/src
+
+# Copy le dossier pythonPackages/src/ dans le containeur au chemin app/src
 
 COPY --chown=userlambda:userlambda pythonPackages/src/ src/
-
-# Attribution des droits d'accès à l'utilisateur non-root
-# RUN chown -R $USERNAME:$USERNAME /app
 
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--notebook-dir=/app"]
 

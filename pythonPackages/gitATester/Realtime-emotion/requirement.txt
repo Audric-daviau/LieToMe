@@ -1,8 +1,0 @@
-opencv-python                 
-tensorflow                    
-numpy                         
-pandas                        
-keras                         
-adam                         
-kwargs                        
-cinit                         
