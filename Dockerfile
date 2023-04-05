@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxrender-dev \
     sudo \
     wget \
+    libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
 # Create new user to run as non-root user

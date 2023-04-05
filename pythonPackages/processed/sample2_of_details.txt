@@ -1,0 +1,13 @@
+Input:../samples/sample2.jpg
+Input full path:/app/src/OpenFace/samples/sample2.jpg
+Camera parameters:1511.46,1511.46,1024,683
+Output HOG:sample2.hog
+Output image:sample2.jpg
+Output aligned directory:sample2_aligned
+Output csv:sample2.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

@@ -1,0 +1,13 @@
+Input:../samples/sample3_16bit_gray.png
+Input full path:/app/src/OpenFace/samples/sample3_16bit_gray.png
+Camera parameters:458.333,458.333,320,200
+Output HOG:sample3_16bit_gray.hog
+Output image:sample3_16bit_gray.jpg
+Output aligned directory:sample3_16bit_gray_aligned
+Output csv:sample3_16bit_gray.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1
