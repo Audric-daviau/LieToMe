@@ -5,9 +5,9 @@ import numpy as np
 import socket
 import time
 
-host, port = "127.0.0.1", 25001
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect((host, port))
+#host, port = "127.0.0.1", 25001
+#sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#sock.connect((host, port))
 
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(
@@ -133,10 +133,10 @@ while cap.isOpened():
             print(posString)
 
             # Converting string to Byte, and sending it to C#
-            sock.sendall(posString.encode("UTF-8"))
+            #sock.sendall(posString.encode("UTF-8"))
             # receiveing data in Byte from C#, and converting it to String
-            receivedData = sock.recv(1024).decode("UTF-8")
-            print(receivedData)
+            #receivedData = sock.recv(1024).decode("UTF-8")
+            #print(receivedData)
             
 
         # Calcul du FPS
