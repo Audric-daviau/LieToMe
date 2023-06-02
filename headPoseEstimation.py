@@ -2,9 +2,13 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+import socket
 import time
 
-# Initialisation de l'objet face_mesh de MediaPipe
+host, port = "127.0.0.1", 25001
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect((host, port))
+
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(
     min_detection_confidence=0.5, min_tracking_confidence=0.5)
@@ -15,10 +19,9 @@ drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 
 # Initialisation de la capture vidéo (0 = webcam principale)
 cap = cv2.VideoCapture(0)
-
-# Boucle principale
+startPos = [0, 0, 0]  # Vector3   x = 0, y = 0, z = 0
 while cap.isOpened():
-    # Lecture de l'image à partir de la webcam
+    time.sleep(0.5)  # sleep 0.5 sec
     success, image = cap.read()
     start = time.time()
 
@@ -65,9 +68,10 @@ while cap.isOpened():
 
             # Conversion des listes en arrays numpy pour les manipulations ultérieures
             face_2d = np.array(face_2d, dtype=np.float64)
+            # Convert it to the NumPy array
             face_3d = np.array(face_3d, dtype=np.float64)
 
-            # Calcul de la matrice de la caméra
+            # The camera matrix
             focal_length = 1 * img_w
             cam_matrix = np.array(
                 [[focal_length, 0, img_h/2], [0, focal_length, img_w / 2], [0, 0, 1]])
@@ -111,15 +115,29 @@ while cap.isOpened():
 
             cv2.line(image, p1, p2, (255, 0, 0), 3)
 
-            # Ajouter le texte sur les images
-            cv2.putText(image, text, (20, 50),
-                        cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2)
-            cv2.putText(image, "x: " + str(np.round(x, 2)), (500, 50),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-            cv2.putText(image, "y: " + str(np.round(y, 2)), (500, 100),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-            cv2.putText(image, "z: " + str(np.round(z, 2)), (500, 150),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            # Add the text on the images
+            cv2.putText(image, text, (20,50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2)
+            cv2.putText(image, "x: " + str(np.round(x,2)), (500, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            cv2.putText(image, "y: " + str(np.round(y,2)), (500, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            cv2.putText(image, "z: " + str(np.round(z,2)), (500, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            
+            if text == "Forward" :
+                startPos[0] += 1
+            elif text == "Looking Right" :
+                startPos[0] -= 0
+            else :
+                startPos[1] += 0
+            # increase x by one
+            # Converting Vector3 to a string, example "0,0,0"
+            posString = ','.join(map(str, startPos))
+            print(posString)
+
+            # Converting string to Byte, and sending it to C#
+            sock.sendall(posString.encode("UTF-8"))
+            # receiveing data in Byte from C#, and converting it to String
+            receivedData = sock.recv(1024).decode("UTF-8")
+            print(receivedData)
+            
 
         # Calcul du FPS
         end = time.time()
