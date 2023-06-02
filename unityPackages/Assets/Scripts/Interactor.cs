@@ -24,7 +24,7 @@ public class Interactor : MonoBehaviour
             if (hit.collider.GetComponent<Interactable>() != false)
             {
                 onInteract = hit.collider.GetComponent<Interactable>().onInteract;
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.F))
                 {
                     onInteract.Invoke();
                 }
