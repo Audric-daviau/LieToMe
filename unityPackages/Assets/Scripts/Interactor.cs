@@ -14,13 +14,6 @@ public class Interactor : MonoBehaviour
     public Vector2 defaultInteractIconSize;
     Interactable interactable;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         RaycastHit hit;
