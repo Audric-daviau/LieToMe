@@ -1,21 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Interactor : MonoBehaviour
 {
     public int interactDistance = 2;
     public LayerMask interactableLayerMask = 8;
-    UnityEvent onInteract;
+    public Image interactImage;
+    public Sprite defaultIcon;
+    public Vector2 defaultIconSize;
+    public Sprite defaulInteractIcon;
+    public Vector2 defaultInteractIconSize;
+    Interactable interactable;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         RaycastHit hit;
@@ -23,11 +21,39 @@ public class Interactor : MonoBehaviour
         {
             if (hit.collider.GetComponent<Interactable>() != false)
             {
-                onInteract = hit.collider.GetComponent<Interactable>().onInteract;
-                if (Input.GetKeyDown(KeyCode.E))
+                if (interactable == null || interactable.ID != hit.collider.GetComponent<Interactable>().ID)
                 {
-                    onInteract.Invoke();
+                    interactable = hit.collider.GetComponent<Interactable>();
+                    if(interactable.iconSize == Vector2.zero)
+                    {
+                        interactImage.rectTransform.sizeDelta = defaultInteractIconSize;
+                    }
+                    else
+                    {
+                        interactImage.rectTransform.sizeDelta = interactable.iconSize;
+                    }
                 }
+                if (interactable.interactionIcon != null)
+                {
+                    interactImage.sprite = interactable.interactionIcon;
+                }
+                else
+                {
+                    interactImage.sprite = defaulInteractIcon;
+                    interactImage.rectTransform.sizeDelta = defaultInteractIconSize;
+                }
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    interactable.onInteract.Invoke();
+                }
+            }
+        }
+        else
+        {
+            if(interactImage.sprite!= defaultIcon)
+            {
+                interactImage.sprite = defaultIcon;
+                interactImage.rectTransform.sizeDelta = defaultIconSize;
             }
         }
     }
