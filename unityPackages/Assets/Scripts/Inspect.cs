@@ -16,18 +16,23 @@ public class Inspect : MonoBehaviour
     GameObject inspectionCanvas;
 
     public GameObject inspectObject = null;
+    private bool inpect = true;
 
     public void OnInspect(GameObject objectToShow)
     {
-        mainCanvas.SetActive(false);
-        inspectionCanvas.SetActive(true);
-        firstPersonCamera.GetComponent<FirstPersonLook>().setPauseCamera(true);
-        firstPersonController.GetComponent<FirstPersonMovement>().setPauseMovement(true);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-        inspectObject = Instantiate(objectToShow, gameObject.transform);
-        inspectObject.transform.Translate(-objectToShow.transform.position + interactionObject.transform.position);
-        inspectObject.layer = interactionObject.layer;
+        if (inpect)
+        {
+            mainCanvas.SetActive(false);
+            inspectionCanvas.SetActive(true);
+            firstPersonCamera.GetComponent<FirstPersonLook>().setPauseCamera(true);
+            firstPersonController.GetComponent<FirstPersonMovement>().setPauseMovement(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            inspectObject = Instantiate(objectToShow, gameObject.transform);
+            inspectObject.transform.Translate(-objectToShow.transform.position + interactionObject.transform.position);
+            inspectObject.layer = interactionObject.layer;
+        }
+        inpect = false;
     }
 
     public void ExitOnInspect()
@@ -42,5 +47,6 @@ public class Inspect : MonoBehaviour
         {
             Destroy(inspectObject);
         }
+        inpect = true;
     }
 }
