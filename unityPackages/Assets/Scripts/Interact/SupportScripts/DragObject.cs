@@ -7,7 +7,6 @@ public class DragObject : MonoBehaviour
     [SerializeField]
     GameObject inspection;
 
-    public float scale = 1f;
     Vector3 lastPos, currPos;
     float rotationSpeed = -0.2f;
     GameObject inspectObject;
@@ -18,7 +17,7 @@ public class DragObject : MonoBehaviour
         inspectObject = inspection.GetComponent<Inspect>().inspectObject;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -29,7 +28,7 @@ public class DragObject : MonoBehaviour
             currPos = Input.mousePosition;
             Vector3 offset = currPos - lastPos;
             inspectObject.transform.RotateAround(inspectObject.transform.position, Vector3.up, offset.x * rotationSpeed);
-            inspectObject.transform.RotateAround(transform.position, Vector3.left, offset.y * rotationSpeed);
+            inspectObject.transform.RotateAround(inspectObject.transform.position, Vector3.left, offset.y * rotationSpeed);
         }
         lastPos = Input.mousePosition;
     }

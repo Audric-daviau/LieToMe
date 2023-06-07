@@ -17,6 +17,7 @@ public class Inspect : MonoBehaviour
 
     public GameObject inspectObject = null;
     private bool inpect = true;
+    private Transform customTransform;
 
     public void OnInspect(GameObject objectToShow)
     {
@@ -29,7 +30,21 @@ public class Inspect : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             inspectObject = Instantiate(objectToShow, gameObject.transform);
-            inspectObject.transform.Translate(-objectToShow.transform.position + interactionObject.transform.position);
+            if (inspectObject.GetComponent<CustomTransform>() != null)
+            {
+                CustomTransform customTransform = inspectObject.GetComponent<CustomTransform>();
+                inspectObject.transform.position = customTransform.position;
+                inspectObject.transform.eulerAngles = customTransform.rotation;
+                inspectObject.transform.localScale *= customTransform.scale;
+            }
+            else
+            {
+                inspectObject.transform.position = interactionObject.transform.position;
+            }
+            foreach (Transform child in inspectObject.transform)
+            {
+                child.gameObject.layer = interactionObject.layer;
+            }
             inspectObject.layer = interactionObject.layer;
         }
         inpect = false;
