@@ -56,7 +56,7 @@ public class ComputerScript : MonoBehaviour
         ActivateFirstPersonMovement(true);
         Destroy(gameObject.GetComponent<Interactable>());
         Cursor.lockState = CursorLockMode.Locked;
-        gameObject.GetComponent<Socket>().enabled = false;
+        //gameObject.GetComponent<Socket>().enabled = false;
     }
 
     public void ExitScreen()
