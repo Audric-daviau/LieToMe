@@ -22,6 +22,7 @@ public class Socket : MonoBehaviour
     private byte[] receivedData;
     public float frameUpdateRate = 0.1f; // Adjust this value as needed (e.g., 0.1f corresponds to 10 frames per second)
     private float lastFrameUpdateTime;
+    public float nbFrameNecessary = 300;
 
     bool running;
     int score = 0;
@@ -54,13 +55,19 @@ public class Socket : MonoBehaviour
             {
                 score--;
             }
-            if (score >= 400)
+
+            if (score >= nbFrameNecessary)
             {
                 computerScript.ValidateEmotion();
                 score = 0;
             }
+
         }
-        scrollbar.size = score/400f;
+        else
+        {
+            score = 0;
+        }
+        scrollbar.size = score/ nbFrameNecessary;
     }
 
     private void Start()
