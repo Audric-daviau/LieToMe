@@ -23,12 +23,12 @@ public class Socket : MonoBehaviour
     public float frameUpdateRate = 0.1f; // Adjust this value as needed (e.g., 0.1f corresponds to 10 frames per second)
     private float lastFrameUpdateTime;
     public float nbFrameNecessary = 300;
-
     bool running;
-    int score = 0;
 
-    [SerializeField]
-    Scrollbar scrollbar;
+    public Scrollbar scrollbar;
+    int score = 0;
+    public ComputerScript computerScript;
+
     private void Update()
     {
 
@@ -37,37 +37,40 @@ public class Socket : MonoBehaviour
         {
             Texture2D receivedTexture = new Texture2D(640, 480);  // Use the same resized resolution
             receivedTexture.LoadImage(receivedData);
-            rawImage.texture = receivedTexture;
+            if (rawImage != null)
+                rawImage.texture = receivedTexture;
 
             // Release memory
             receivedData = null;
 
             lastFrameUpdateTime = Time.time;
         }
-        ComputerScript computerScript = gameObject.GetComponent<ComputerScript>();
-        if (computerScript.isRunning)
+        if (computerScript != null)
         {
-            if (receivedEmotion.Equals(computerScript.emotion))
+            if (computerScript.isRunning)
             {
-                score++;
-            }
-            else if (score > 0)
-            {
-                score--;
-            }
+                if (receivedEmotion.Equals(computerScript.emotion))
+                {
+                    score++;
+                }
+                else if (score > 0)
+                {
+                    score--;
+                }
 
-            if (score >= nbFrameNecessary)
+                if (score >= nbFrameNecessary)
+                {
+                    computerScript.ValidateEmotion();
+                    score = 0;
+                }
+
+            }
+            else
             {
-                computerScript.ValidateEmotion();
                 score = 0;
             }
-
+            scrollbar.size = score / nbFrameNecessary;
         }
-        else
-        {
-            score = 0;
-        }
-        scrollbar.size = score/ nbFrameNecessary;
     }
 
     private void Start()

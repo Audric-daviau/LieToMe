@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ComputerScript : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class ComputerScript : MonoBehaviour
     GameObject mainCanvas;
     [SerializeField]
     GameObject canvas;
+    [SerializeField]
+    Scrollbar scrollBar;
+    [SerializeField]
+    RawImage rawImage;
 
     public string emotion;
 
@@ -27,7 +32,10 @@ public class ComputerScript : MonoBehaviour
 
     public void ActivateEmotion()
     {
-        gameObject.GetComponent<Socket>().enabled = true;
+        Socket socket = firstPersonController.GetComponent<Socket>();
+        socket.computerScript = gameObject.GetComponent<ComputerScript>();
+        socket.rawImage = rawImage;
+        socket.scrollbar = scrollBar;
         emotionScreen.SetActive(true);
         screen.SetActive(false);
         spotLight.GetComponent<Light>().color = Color.white;
@@ -38,7 +46,6 @@ public class ComputerScript : MonoBehaviour
 
     public void ValidateEmotion()
     {
-        emotionScreen.SetActive(false);
         screen.SetActive(true);
         Material mat = screen.GetComponent<Renderer>().material;
         mat.SetColor("_EmissionColor", new Color(0.072f, 0.226f, 0.05f, 1f));
@@ -64,7 +71,6 @@ public class ComputerScript : MonoBehaviour
         isRunning = false;
         ActivateFirstPersonMovement(true);
         Cursor.lockState = CursorLockMode.Locked;
-        gameObject.GetComponent<Socket>().enabled = false;
     }
 
     private void ActivateFirstPersonMovement(bool value)
