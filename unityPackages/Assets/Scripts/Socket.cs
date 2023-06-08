@@ -28,6 +28,7 @@ public class Socket : MonoBehaviour
     public Scrollbar scrollbar;
     int score = 0;
     public ComputerScript computerScript;
+    public int emotionValidated = 0;
 
     private void Update()
     {
@@ -70,6 +71,10 @@ public class Socket : MonoBehaviour
                 score = 0;
             }
             scrollbar.size = score / nbFrameNecessary;
+        }
+        if(emotionValidated == 5)
+        {
+            Debug.Log("gagné");
         }
     }
 

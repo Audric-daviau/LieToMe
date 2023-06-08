@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,7 +57,14 @@ public class ComputerScript : MonoBehaviour
         ActivateFirstPersonMovement(true);
         Destroy(gameObject.GetComponent<Interactable>());
         Cursor.lockState = CursorLockMode.Locked;
-        //gameObject.GetComponent<Socket>().enabled = false;
+        ActivateUI(emotion);
+    }
+
+    private void ActivateUI(string emotion)
+    {
+        GameObject panel = mainCanvas.transform.Find("Emotions/" + emotion).gameObject;
+        panel.SetActive(true);
+        firstPersonController.GetComponent<Socket>().emotionValidated++;
     }
 
     public void ExitScreen()
