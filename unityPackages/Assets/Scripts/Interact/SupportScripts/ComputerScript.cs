@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Scripting.Python;
 
 public class ComputerScript : MonoBehaviour
 {
@@ -28,6 +27,7 @@ public class ComputerScript : MonoBehaviour
 
     public void ActivateEmotion()
     {
+        gameObject.GetComponent<Socket>().enabled = true;
         emotionScreen.SetActive(true);
         screen.SetActive(false);
         spotLight.GetComponent<Light>().color = Color.white;
@@ -49,6 +49,7 @@ public class ComputerScript : MonoBehaviour
         ActivateFirstPersonMovement(true);
         Destroy(gameObject.GetComponent<Interactable>());
         Cursor.lockState = CursorLockMode.Locked;
+        gameObject.GetComponent<Socket>().enabled = false;
     }
 
     public void ExitScreen()
@@ -63,6 +64,7 @@ public class ComputerScript : MonoBehaviour
         isRunning = false;
         ActivateFirstPersonMovement(true);
         Cursor.lockState = CursorLockMode.Locked;
+        gameObject.GetComponent<Socket>().enabled = false;
     }
 
     private void ActivateFirstPersonMovement(bool value)

@@ -65,9 +65,15 @@ public class Socket : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(Wait());
         ThreadStart ts = new ThreadStart(GetInfo);
         mThread = new Thread(ts);
         mThread.Start();
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1);
     }
 
     void GetInfo()
