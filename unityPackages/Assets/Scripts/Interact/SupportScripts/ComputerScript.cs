@@ -10,26 +10,48 @@ public class ComputerScript : MonoBehaviour
     GameObject spotLight;
     [SerializeField]
     Sprite image;
+    [SerializeField]
+    GameObject emotionScreen;
 
-    private bool isGlowingRed = true;
+    //private bool isGlowingRed = true;
 
-    public void ChangeColor()
+    //public void ChangeColor()
+    //{
+    //    Material mat = screen.GetComponent<Renderer>().material;
+    //    if (isGlowingRed)
+    //    {
+    //        mat.SetColor("_EmissionColor", new Color(0.072f, 0.226f, 0.05f, 1f));
+    //        spotLight.GetComponent<Light>().color = Color.green;
+    //        mat.SetTexture("_MainTex", image.texture);
+    //        mat.color = Color.white;
+    //    }
+    //    else
+    //    {
+    //        mat.SetColor("_EmissionColor", new Color(0.25f, 0f, 0f, 1f));
+    //        spotLight.GetComponent<Light>().color = Color.red;
+    //        mat.SetTexture("_MainTex", null);
+    //        mat.color = new Color(0.125f, 0.118f, 0.118f, 1f);
+    //    }
+    //    isGlowingRed = !isGlowingRed;
+    //}
+
+    public void ActivateEmotion()
     {
+        emotionScreen.SetActive(true);
+        screen.SetActive(false);
+        spotLight.GetComponent<Light>().color = Color.white;
+        StartCoroutine(StartCamera());
+    }
+
+    IEnumerator StartCamera()
+    {
+        yield return new WaitForSeconds(5);
+        emotionScreen.SetActive(false);
+        screen.SetActive(true);
         Material mat = screen.GetComponent<Renderer>().material;
-        if (isGlowingRed)
-        {
-            mat.SetColor("_EmissionColor", new Color(0.072f, 0.226f, 0.05f, 1f));
-            spotLight.GetComponent<Light>().color = Color.green;
-            mat.SetTexture("_MainTex", image.texture);
-            mat.color = Color.white;
-        }
-        else
-        {
-            mat.SetColor("_EmissionColor", new Color(0.25f, 0f, 0f, 1f));
-            spotLight.GetComponent<Light>().color = Color.red;
-            mat.SetTexture("_MainTex", null);
-            mat.color = new Color(0.125f, 0.118f, 0.118f, 1f);
-        }
-        isGlowingRed = !isGlowingRed;
+        mat.SetColor("_EmissionColor", new Color(0.072f, 0.226f, 0.05f, 1f));
+        spotLight.GetComponent<Light>().color = Color.green;
+        mat.SetTexture("_MainTex", image.texture);
+        mat.color = Color.white;;
     }
 }
