@@ -58,6 +58,7 @@ public class Inspect : MonoBehaviour
         firstPersonController.GetComponent<FirstPersonMovement>().setPauseMovement(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
         if (inspectObject != null)
         {
             Destroy(inspectObject);
