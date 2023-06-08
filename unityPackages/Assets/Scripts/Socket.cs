@@ -24,10 +24,14 @@ public class Socket : MonoBehaviour
     private float lastFrameUpdateTime;
 
     bool running;
+    int score = 0;
+
+    [SerializeField]
+    Scrollbar scrollbar;
     private void Update()
     {
 
-        Debug.Log("Emotion detected: " + receivedEmotion);
+        //Debug.Log("Emotion detected: " + receivedEmotion);
         if (receivedData != null && Time.time - lastFrameUpdateTime >= frameUpdateRate)
         {
             Texture2D receivedTexture = new Texture2D(640, 480);  // Use the same resized resolution
@@ -39,7 +43,24 @@ public class Socket : MonoBehaviour
 
             lastFrameUpdateTime = Time.time;
         }
-
+        ComputerScript computerScript = gameObject.GetComponent<ComputerScript>();
+        if (computerScript.isRunning)
+        {
+            if (receivedEmotion.Equals(computerScript.emotion))
+            {
+                score++;
+            }
+            else if (score > 0)
+            {
+                score--;
+            }
+            if (score >= 400)
+            {
+                computerScript.ValidateEmotion();
+                score = 0;
+            }
+        }
+        scrollbar.size = score/400f;
     }
 
     private void Start()
