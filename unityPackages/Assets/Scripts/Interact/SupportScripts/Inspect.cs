@@ -23,11 +23,7 @@ public class Inspect : MonoBehaviour
     {
         if (inpect)
         {
-            mainCanvas.SetActive(false);
-            inspectionCanvas.SetActive(true);
-            firstPersonCamera.GetComponent<FirstPersonLook>().setPauseCamera(true);
-            firstPersonController.GetComponent<FirstPersonMovement>().setPauseMovement(true);
-            Cursor.visible = true;
+            ActivateFirstPersonMovement(false);
             Cursor.lockState = CursorLockMode.Confined;
             inspectObject = Instantiate(objectToShow, gameObject.transform);
             if (inspectObject.GetComponent<CustomTransform>() != null)
@@ -52,16 +48,24 @@ public class Inspect : MonoBehaviour
 
     public void ExitOnInspect()
     {
-        mainCanvas.SetActive(true);
-        inspectionCanvas.SetActive(false);
-        firstPersonCamera.GetComponent<FirstPersonLook>().setPauseCamera(false);
-        firstPersonController.GetComponent<FirstPersonMovement>().setPauseMovement(false);
-        Cursor.visible = false;
+        ActivateFirstPersonMovement(true);
         Cursor.lockState = CursorLockMode.Locked;
         if (inspectObject != null)
         {
             Destroy(inspectObject);
         }
         inpect = true;
+    }
+
+    private void ActivateFirstPersonMovement(bool value)
+    {
+        mainCanvas.SetActive(value);
+        inspectionCanvas.SetActive(!value);
+        firstPersonCamera.GetComponent<FirstPersonLook>().enabled = value;
+        firstPersonCamera.GetComponent<Zoom>().enabled = value;
+        firstPersonController.GetComponent<FirstPersonMovement>().enabled = value;
+        firstPersonController.GetComponent<Jump>().enabled = value;
+        firstPersonController.GetComponent<Crouch>().enabled = value;
+        Cursor.visible = !value;
     }
 }
